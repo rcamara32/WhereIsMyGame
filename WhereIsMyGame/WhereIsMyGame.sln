@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereIsMyGame.WebApp.MVC", "..\src\WhereIsMyGame.WebApp.MVC\WhereIsMyGame.WebApp.MVC.csproj", "{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webApps", "webApps", "{40A3D070-B8D7-4148-A801-B930F72A115E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereIsMyGame.API.Auth", "WhereIsMyGame.API.Auth\WhereIsMyGame.API.Auth.csproj", "{8918BC21-F57A-4869-A59D-B2234D013586}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{28C419CC-E578-4DB7-8FB3-FA7643081C59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8918BC21-F57A-4869-A59D-B2234D013586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8918BC21-F57A-4869-A59D-B2234D013586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8918BC21-F57A-4869-A59D-B2234D013586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8918BC21-F57A-4869-A59D-B2234D013586}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FEAF9ABF-B4BF-4D1A-9397-2E7A3E50CA5C} = {40A3D070-B8D7-4148-A801-B930F72A115E}
+		{8918BC21-F57A-4869-A59D-B2234D013586} = {28C419CC-E578-4DB7-8FB3-FA7643081C59}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF538C1A-EE9E-4FD5-9F81-7233F5802570}
+	EndGlobalSection
+EndGlobal
