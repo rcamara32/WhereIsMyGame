@@ -1,32 +1,39 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using NetDevPack.Identity.Jwt;
-using NetDevPack.Identity.Jwt.Model;
-using NetDevPack.Identity.Model;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using WhereIsMyGame.Auth.API.Models;
+using WhereIsMyGame.WebApi.Core.Controllers;
+using WhereIsMyGame.WebApi.Core.Identity;
 
-namespace WhereIsMyGame.API.Auth.Controllers
+namespace WhereIsMyGame.Auth.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController : MainController
     {
 
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly AppJwtSettings _appJwtSettings;
+        private readonly AppSettings _appSettings;
 
         public AuthController(SignInManager<IdentityUser> signInManager,
-                      UserManager<IdentityUser> userManager,
-                      IOptions<AppJwtSettings> appJwtSettings)
+                              UserManager<IdentityUser> userManager,
+                              IOptions<AppSettings> appSettings)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _appJwtSettings = appJwtSettings.Value;
+            _appSettings = appSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("new-account")]
         public async Task<ActionResult> Register(RegisterUser registerUser)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -41,10 +48,15 @@ namespace WhereIsMyGame.API.Auth.Controllers
             var createdUser = await _userManager.CreateAsync(user, registerUser.Password);
             if (createdUser.Succeeded)
             {
-                return Ok(GetUserResponse(user.Email));
+                return CustomResponse(await GenerateJwt(registerUser.Email));
             }
 
-            return BadRequest(createdUser.Errors);
+            foreach (var error in createdUser.Errors)
+            {
+                AddError(error.Description);
+            }
+
+            return CustomResponse();
         }
 
         [HttpPost("login")]
@@ -56,44 +68,84 @@ namespace WhereIsMyGame.API.Auth.Controllers
                  (loginUser.Email, loginUser.Password, false, true);
 
             if (logged.Succeeded)
-            {
-                return Ok(GetFullJwt(loginUser.Email));
-            }
+            {                
+                return CustomResponse(await GenerateJwt(loginUser.Email));
+            }            
 
-            if (logged.IsLockedOut)
-            {
-                return BadRequest("Your account is temporalily disabled.");
-            }
-
-            return BadRequest("Incorrect user or password");
+            if (logged.IsLockedOut)                            
+                AddError("Your account is temporalily disabled.");            
+            else            
+                AddError("Incorrect user or password");                        
+            
+            return CustomResponse();
         }
 
-
-        private string GetFullJwt(string email)
+        private async Task<GetUserLogin> GenerateJwt(string email)
         {
-            return new JwtBuilder()
-                .WithUserManager(_userManager)
-                .WithJwtSettings(_appJwtSettings)
-                .WithEmail(email)
-                .WithJwtClaims()
-                .WithUserClaims()
-                .WithUserRoles()
-                .BuildToken();
+            var user = await _userManager.FindByEmailAsync(email);
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            var identityClaims = await GetUserClaims(claims, user);
+            var encodedToken = EncryptToken(identityClaims);
+
+            return GetUserToken(encodedToken, user, claims);
         }
 
-        private UserResponse GetUserResponse(string email)
+        private async Task<ClaimsIdentity> GetUserClaims(ICollection<Claim> claims, IdentityUser user)
         {
-            var response = new JwtBuilder()
-                 .WithUserManager(_userManager)
-                 .WithJwtSettings(_appJwtSettings)
-                 .WithEmail(email)
-                 .WithJwtClaims()
-                 .WithUserClaims()
-                 .WithUserRoles()
-                 .BuildUserResponse() as UserResponse;
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim("role", userRole));
+            }
+
+            var identityClaims = new ClaimsIdentity();
+            identityClaims.AddClaims(claims);
+
+            return identityClaims;
+        }
+
+        private string EncryptToken(ClaimsIdentity identityClaims)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
+            var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _appSettings.Issuer,
+                Audience = _appSettings.Audience,
+                Subject = identityClaims,
+                Expires = DateTime.UtcNow.AddHours(_appSettings.Expiration),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            });
+
+            return tokenHandler.WriteToken(token);
+        }
+
+        private GetUserLogin GetUserToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+        {
+            var response =  new GetUserLogin
+            {
+                AccessToken = encodedToken,
+                ExpiresIn = TimeSpan.FromHours(_appSettings.Expiration).TotalSeconds,
+                UserToken = new UserToken
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Claims = claims.Select(c => new UserClaim { Type = c.Type, Value = c.Value })
+                }
+            };
 
             return response;
         }
+
+        private static long ToUnixEpochDate(DateTime date)
+            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
     }
 }

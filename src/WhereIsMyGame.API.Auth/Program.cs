@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WhereIsMyGame.API.Auth
+namespace WhereIsMyGame.Auth.API
 {
     public class Program
     {

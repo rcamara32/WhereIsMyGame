@@ -1,0 +1,15 @@
+USE [WhereIsMyGame]
+GO
+
+INSERT INTO [dbo].[Plataforms] VALUES ('8b607099-28fe-4c3d-a002-08c9b37f6e01' ,'PLAYSTATION 1', 10)
+INSERT INTO [dbo].[Plataforms] VALUES ('22ff9462-67c5-4efd-83c2-4801442363b9' ,'PLAYSTATION 2', 20)
+INSERT INTO [dbo].[Plataforms] VALUES ('ec887b35-6256-4b3d-96a5-fb9711e548e3' ,'PLAYSTATION 3', 30)
+INSERT INTO [dbo].[Plataforms] VALUES ('7cbf9dcb-0d71-4542-b328-16d2fd8e9ef6' ,'PLAYSTATION 4', 40)
+INSERT INTO [dbo].[Plataforms] VALUES ('aa12d62a-571f-4eb4-a2c4-7236ffd5e1b6' ,'NINTENDO WII', 60)
+INSERT INTO [dbo].[Plataforms] VALUES ('4e56b7e9-68bd-4e17-80b0-0f867d64ca79' ,'XBOX ONE', 60)
+INSERT INTO [dbo].[Plataforms] VALUES ('9144c074-d4f8-4c00-b165-934572fd88dd' ,'SUPER NINTENDO', 70)
+INSERT INTO [dbo].[Plataforms] VALUES ('cfbb19c2-e0c0-4c49-bcd1-59427a400222' ,'MEGA DRIVE', 80)
+INSERT INTO [dbo].[Plataforms] VALUES ('c7cde762-c23e-48ef-96db-4b006e316b90' ,'MASTER SYSTEM', 90)
+INSERT INTO [dbo].[Plataforms] VALUES ('d9ad9182-69c6-4fbc-a556-26a6980b5ee3' ,'XBOX', 60)
+
+GO

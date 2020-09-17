@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WhereIsMyGame.WebApp.MVC.Models.GameViewModel>
+@using WhereIsMyGame.WebApp.MVC.Extensions
+
+@{
+    ViewData["Title"] = "My Games";
+}
+
+<section>
+    <div>
+        <div style="background-image: url(images/banners/Template.jpg); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover">
+            <div style="text-align: center;">
+                <img src="~/images/logo_big.png" />
+            </div>
+        </div>
+        <div class="container" style=" padding-top: 20px">
+            <div class="row">
+                @{
+                    foreach (var game in Model.OrderBy(p => p.Plataform).ThenBy(c=>c.Name))
+                    {
+                        <div class="col-md-3">
+                            <div href="#" class="card card-product-grid">
+                                <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id" class="img-wrap">
+                                    <img src="~/images/produtos/@game.Image" alt="@game.Name">
+                                </a>
+                                <figcaption class="info-wrap">
+                                    <a asp-controller="Collection" asp-action="Details" asp-route-id="@game.Id" class="title">
+                                        <b> @game.Name</b>
+                                    </a>
+                                    <small class="card-text">
+                                        @game.Plataform <br />
+                                        @game.Description
+                                    </small>
+                                </figcaption>
+                                <div class="card-footer price mt-1">
+                                    @if (game.IsActive)
+                                    {
+                                        <p>Is Active</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Is Inactive</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

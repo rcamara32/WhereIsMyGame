@@ -1,37 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using WhereIsMyGame.WebApp.MVC.Models;
 
 namespace WhereIsMyGame.WebApp.MVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MainController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        [Route("")]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [Route("system-unavailable")]
+        public IActionResult SystemUnavailable()
         {
-            return View();
+            var modelErro = new ErrorViewModel
+            {
+                ErrorMessage = "The system is temporarily unavailable",
+                Error = "Game Over...",
+                ErroCode = 500
+            };
+
+            return View("Error", modelErro);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        [Route("error/{id:length(3,3)}")]
+        public IActionResult Error(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var modelErro = new ErrorViewModel();
+
+            if (id == 500)
+            {
+                modelErro.ErrorMessage = "An error has occurred! Please try again later.";
+                modelErro.Error = "Game Over...";
+                modelErro.ErroCode = id;
+            }
+            else if (id == 404)
+            {
+                modelErro.ErrorMessage = "The page you are looking for does not exist!";
+                modelErro.Error = "Page Not Found";
+                modelErro.ErroCode = id;
+            }
+            else if (id == 403)
+            {
+                modelErro.ErrorMessage = "You didn't kill the big boss!";
+                modelErro.Error = "Level Locked!";
+                modelErro.ErroCode = id;
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+
+            return View("Error", modelErro);
         }
     }
 }

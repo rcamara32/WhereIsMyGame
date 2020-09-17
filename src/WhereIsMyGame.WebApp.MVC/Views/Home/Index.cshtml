@@ -2,7 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="container">
+        
+
+        <div style="text-align: center;">
+            <img src="~/images/logo_big.png" />
+        </div>
+
+        <div class="jumbotron">
+            <h1 class="display-3">What do you do when your friends want to borrow your games?</h1>
+            <p class="lead">
+                Don't worry anymore pal! Now you can manage and track all your games right here! Here is the right place
+                for you know where exactly that awesome game you can't find home is.
+                Its so simple, you can add your games, control who borrowed it, and much more. Enjoy it!
+            </p>
+            <p>
+                <a asp-action="Register" asp-controller="Auth"
+                   class="btn btn-lg btn-success" role="button">Sign up today</a>
+            </p>
+        </div>
+    </div>
