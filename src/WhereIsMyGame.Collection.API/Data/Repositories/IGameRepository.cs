@@ -15,6 +15,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
 
         void Add(Game game);
         void Update(Game game);
+        void Delete(Game game);
 
         void Add(Plataform plataform);
         void Update(Plataform plataform);

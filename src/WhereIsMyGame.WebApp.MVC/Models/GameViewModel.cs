@@ -12,6 +12,9 @@ namespace WhereIsMyGame.WebApp.MVC.Models
         public bool IsActive { get; set; }       
         public DateTime CreatedDate { get; set; }
         public string Image { get; set; }        
-        public PlataformViewModel Plataform { get; set; }       
+
+        public PlataformViewModel Plataform { get; set; }
+        public IEnumerable<PlataformViewModel> Plataforms { get; set; }
+
     }
 }

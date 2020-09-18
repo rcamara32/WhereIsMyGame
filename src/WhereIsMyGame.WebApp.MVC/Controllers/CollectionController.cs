@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereIsMyGame.WebApp.MVC.Models;
@@ -26,6 +25,16 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             return View(collection);
         }
 
+        [HttpGet]
+        [Route("game")]
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var game = await _collectionService.GetById(id);   
+            game.Plataforms = await _collectionService.GetAllPlataforms();
+
+            return View(game);
+        }
+
         [Route("new-game")]
         public async Task<IActionResult> NewGame()
         {
@@ -34,7 +43,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 
         [Route("new-game")]
         [HttpPost]
-        public async Task<IActionResult> NewProduct(NewGameViewModel newGameViewModel)
+        public async Task<IActionResult> NewGame(NewGameViewModel newGameViewModel)
         {
             if (!ModelState.IsValid) return View(await GetAllPlataformsAsync(newGameViewModel));
 
@@ -46,10 +55,36 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Route("edit-game")]
+        public async Task<IActionResult> EditGame(Guid id, EditGameViewModel editGameViewModel)
+        {            
+            if (!ModelState.IsValid)
+                return View(await GetAllPlataformsAsync(editGameViewModel));
+
+            await _collectionService.EditGame(editGameViewModel);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("delete-game")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _collectionService.DeleteGame(id);
+            return RedirectToAction("Index");
+        }
+
         private async Task<NewGameViewModel> GetAllPlataformsAsync(NewGameViewModel newGameViewModel)
         {
             newGameViewModel.Plataforms = await _collectionService.GetAllPlataforms();
             return newGameViewModel;
+        }
+
+        private async Task<EditGameViewModel> GetAllPlataformsAsync(EditGameViewModel editGameViewModel)
+        {
+            editGameViewModel.Plataforms = await _collectionService.GetAllPlataforms();
+            return editGameViewModel;
         }
 
     }

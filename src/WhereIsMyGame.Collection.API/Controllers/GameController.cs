@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using WhereIsMyGame.Collection.API.Application.Dto;
 using WhereIsMyGame.Collection.API.Application.Services;
 using WhereIsMyGame.WebApi.Core.Controllers;
-using WhereIsMyGame.WebApi.Core.Identity;
 using WhereIsMyGame.WebApi.Core.Users;
 
 namespace WhereIsMyGame.Collection.API.Controllers
@@ -31,7 +30,7 @@ namespace WhereIsMyGame.Collection.API.Controllers
             return gameCollection == null ? NotFound() : CustomResponse(gameCollection);
         }
 
-        [ClaimsAuthorize("Collection", "Read")]
+        //[ClaimsAuthorize("Collection", "Read")]
         [HttpGet("games/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -54,6 +53,21 @@ namespace WhereIsMyGame.Collection.API.Controllers
 
             var result = await _gameAppService.AddGame(addGameDto);
 
+            return CustomResponse(result);
+        }
+
+        [HttpPut("games/edit-game")]
+        public async Task<IActionResult> Edit(EditGameDto editGameDto)
+        {            
+            var result = await _gameAppService.EditGame(editGameDto);
+
+            return CustomResponse(result);
+        }
+
+        [HttpDelete("games/delete-game/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _gameAppService.DeleteGame(id);
             return CustomResponse(result);
         }
 

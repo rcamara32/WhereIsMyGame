@@ -34,7 +34,7 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
         public async Task<GameViewModel> GetById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"/api/collection/game/{id}");
+            var response = await _httpClient.GetAsync($"/api/collection/games/{id}");
 
             ExceptionHandlingResponse(response);
 
@@ -57,6 +57,28 @@ namespace WhereIsMyGame.WebApp.MVC.Services
             var response = await _httpClient.PostAsync("/api/collection/games/add-game/", newGameContent);
 
             if (!ExceptionHandlingResponse(response)) 
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+        public async Task<ResponseResult> EditGame(EditGameViewModel editGameViewModel)
+        {
+            var editGameContent = GetContent(editGameViewModel);
+
+            var response = await _httpClient.PutAsync("/api/collection/games/edit-game/", editGameContent);
+
+            if (!ExceptionHandlingResponse(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+        public async Task<ResponseResult> DeleteGame(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/collection/games/delete-game/{id}");
+
+            if (!ExceptionHandlingResponse(response))
                 return await DeserializeObjectResponse<ResponseResult>(response);
 
             return Ok();

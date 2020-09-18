@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereIsMyGame.Collection.API.Application.Dto;
 using WhereIsMyGame.Collection.API.Data.Repositories;
-using WhereIsMyGame.Collection.API.Models;
 
 namespace WhereIsMyGame.Collection.API.Application.Services
 {
@@ -25,12 +24,13 @@ namespace WhereIsMyGame.Collection.API.Application.Services
             {
                 Id = x.Id,
                 Name = x.Name,
-                Description = x.Description,                
+                Description = x.Description,
                 CreatedDate = x.CreatedDate,
                 Image = x.Image,
                 IsActive = x.IsActive,
                 UserId = x.UserId,
-                Plataform = new PlataformDto {
+                Plataform = new PlataformDto
+                {
                     Id = x.PlataformId,
                     Name = x.Plataform.Name,
                     Code = x.Plataform.Code
@@ -49,7 +49,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                     Id = game.Id,
                     Name = game.Name,
                     Description = game.Description,
-                   
+
                     CreatedDate = game.CreatedDate,
                     Image = game.Image,
                     IsActive = game.IsActive,
@@ -84,6 +84,35 @@ namespace WhereIsMyGame.Collection.API.Application.Services
             var result = await _gameRepository.UnitOfWork.Commit();
 
             return result;
+        }
+
+        public async Task<bool> EditGame(EditGameDto editGameDto)
+        {
+            var game = await _gameRepository.GetById(editGameDto.Id);
+
+            if (game!= null)
+            {
+                game.UpdateDetails(editGameDto.PlataformId, editGameDto.Name,
+                        editGameDto.Description, editGameDto.IsActive, editGameDto.Image);
+
+                _gameRepository.Update(game);
+                return await _gameRepository.UnitOfWork.Commit();
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteGame(Guid id)
+        {
+            var game = await _gameRepository.GetById(id);
+
+            if (game != null)
+            {                
+                _gameRepository.Delete(game);
+                return await _gameRepository.UnitOfWork.Commit();
+            }
+
+            return false;
         }
     }
 }

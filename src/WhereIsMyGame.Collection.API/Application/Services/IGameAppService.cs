@@ -11,5 +11,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
         Task<GameDto> GetById(Guid id);
         Task<IEnumerable<PlataformDto>> GetAllPlataforms();
         Task<bool> AddGame(AddGameDto addGameDto);
+        Task<bool> EditGame(EditGameDto editGameDto);
+        Task<bool> DeleteGame(Guid id);
     }
 }

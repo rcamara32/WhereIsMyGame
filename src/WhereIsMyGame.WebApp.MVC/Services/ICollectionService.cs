@@ -14,6 +14,9 @@ namespace WhereIsMyGame.WebApp.MVC.Services
         Task<IEnumerable<PlataformViewModel>> GetAllPlataforms();
 
         Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel);
+        Task<ResponseResult> EditGame(EditGameViewModel editGameViewModel);
+        Task<ResponseResult> DeleteGame(Guid id);
+
     }
 
     public interface ICollectionServiceRefit

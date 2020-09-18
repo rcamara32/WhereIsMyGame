@@ -39,16 +39,15 @@ namespace WhereIsMyGame.Collection.API.Models
         public void Deactivate() => IsActive = false;
         public void IsLoan() => Loans.Any(c => !c.IsReturned);
 
-        public void ChangePlataform(Plataform plataform)
-        {
-            Plataform = plataform;
-            PlataformId = plataform.Id;
-        }
-
-        public void ChangeDescription(string description)
-        {
-            Validations.ValidateIsEmpty(description, "The Game Description cannot be empty");
+        public void UpdateDetails(Guid plataformId, string name, string description, bool isActive, string image)
+        {                     
+            PlataformId = plataformId;
+            Name = name;
             Description = description;
+            IsActive = isActive;
+            Image = image;
+
+            Validate();
         }
 
         public void Validate()

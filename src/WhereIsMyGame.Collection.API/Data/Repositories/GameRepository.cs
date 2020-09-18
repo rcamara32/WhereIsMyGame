@@ -41,7 +41,9 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
 
         public async Task<Game> GetById(Guid id)
         {
-            return await _context.Games.FindAsync(id);
+            return await _context.Games
+                .Include(o => o.Plataform)
+                .FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public void Add(Game game)
@@ -58,6 +60,12 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         {
             _context.Friends.Add(friend);
         }
+
+        public void Delete(Game game)
+        {
+            _context.Games.Remove(game);
+        }
+
 
         public void Update(Game game)
         {

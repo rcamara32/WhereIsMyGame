@@ -12,5 +12,7 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
         Task<GameDto> GetById(Guid id);
         Task<IEnumerable<PlataformDto>> GetAllPlataforms();
         Task<ResponseResult> AddGame(AddGameDto addGameDto);
+        Task<ResponseResult> EditGame(EditGameDto editGameDto);
+        Task<ResponseResult> DeleteGame(Guid id);
     }
 }

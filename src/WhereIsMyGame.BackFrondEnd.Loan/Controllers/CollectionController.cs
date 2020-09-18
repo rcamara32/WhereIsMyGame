@@ -51,6 +51,29 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Controllers
             return CustomResponse(response);
         }
 
+        [HttpPut]
+        [Route("games/edit-game")]
+        public async Task<IActionResult> EditGame(EditGameDto editGameDto)
+        {
+            var response = await _collectionService.EditGame(editGameDto);
+            return CustomResponse(response);
+        }
+
+        [HttpDelete]
+        [Route("games/delete-game/{id}")]
+        public async Task<IActionResult> DeleteGame(Guid id)
+        {
+            var game = await _collectionService.GetById(id);
+
+            if (game == null)
+            {
+                AddError("Game not found");
+                return CustomResponse();
+            }
+
+            var response = await _collectionService.DeleteGame(id);
+            return CustomResponse(response);
+        }
 
     }
 }

@@ -22,7 +22,7 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
 
         public async Task<GameDto> GetById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"/api/collection/game/{id}");
+            var response = await _httpClient.GetAsync($"/api/collection/games/{id}");
 
             HandlingResponseError(response);
 
@@ -30,7 +30,7 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
         }
 
         public async Task<IEnumerable<GameDto>> GetByUser()
-        {   
+        {
             var response = await _httpClient.GetAsync("/api/collection/games/");
 
             if (response.StatusCode == HttpStatusCode.NotFound) return null;
@@ -54,6 +54,28 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
             var itemContent = GetContent(addGameDto);
 
             var response = await _httpClient.PostAsync("/api/collection/games/add-game/", itemContent);
+
+            if (!HandlingResponseError(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+        public async Task<ResponseResult> EditGame(EditGameDto editGameDto)
+        {
+            var itemContent = GetContent(editGameDto);
+
+            var response = await _httpClient.PostAsync("/api/collection/games/edit-game/", itemContent);
+
+            if (!HandlingResponseError(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+        public async Task<ResponseResult> DeleteGame(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/collection/games/delete-game/{id}");
 
             if (!HandlingResponseError(response))
                 return await DeserializeObjectResponse<ResponseResult>(response);
