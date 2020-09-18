@@ -15,11 +15,10 @@ using WhereIsMyGame.WebApi.Core.Identity;
 
 namespace WhereIsMyGame.Auth.API.Controllers
 {
-    [Route("api/auth")]
     [ApiController]
+    [Route("api/auth")]
     public class AuthController : MainController
     {
-
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
@@ -64,19 +63,19 @@ namespace WhereIsMyGame.Auth.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var logged = await _signInManager.PasswordSignInAsync
-                 (loginUser.Email, loginUser.Password, false, true);
-
+            var logged = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
             if (logged.Succeeded)
-            {                
+            {
                 return CustomResponse(await GenerateJwt(loginUser.Email));
-            }            
+            }
 
-            if (logged.IsLockedOut)                            
-                AddError("Your account is temporalily disabled.");            
-            else            
-                AddError("Incorrect user or password");                        
-            
+            if (logged.IsLockedOut)
+            {
+                AddError("Your account is temporalily disabled.");
+                return CustomResponse();
+            }
+
+            AddError("Incorrect user or password");
             return CustomResponse();
         }
 
@@ -129,7 +128,7 @@ namespace WhereIsMyGame.Auth.API.Controllers
 
         private GetUserLogin GetUserToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
         {
-            var response =  new GetUserLogin
+            var response = new GetUserLogin
             {
                 AccessToken = encodedToken,
                 ExpiresIn = TimeSpan.FromHours(_appSettings.Expiration).TotalSeconds,

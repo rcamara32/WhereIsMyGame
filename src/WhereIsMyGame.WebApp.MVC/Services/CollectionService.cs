@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WhereIsMyGame.Core.Communication;
 using WhereIsMyGame.WebApp.MVC.Extensions;
 using WhereIsMyGame.WebApp.MVC.Models;
 
@@ -16,7 +17,7 @@ namespace WhereIsMyGame.WebApp.MVC.Services
         public CollectionService(HttpClient httpClient,
             IOptions<AppSettings> settings)
         {
-            httpClient.BaseAddress = new Uri(settings.Value.CollectionUrl);
+            httpClient.BaseAddress = new Uri(settings.Value.CollectionBffUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             _httpClient = httpClient;
@@ -40,6 +41,25 @@ namespace WhereIsMyGame.WebApp.MVC.Services
             return await DeserializeObjectResponse<GameViewModel>(response);
         }
 
-      
+        public async Task<IEnumerable<PlataformViewModel>> GetAllPlataforms()
+        {
+            var response = await _httpClient.GetAsync("/api/collection/games/plataforms");
+
+            ExceptionHandlingResponse(response);
+
+            return await DeserializeObjectResponse<IEnumerable<PlataformViewModel>>(response);
+        }
+
+        public async Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel)
+        {
+            var newGameContent = GetContent(newGameViewModel);
+
+            var response = await _httpClient.PostAsync("/api/collection/games/add-game/", newGameContent);
+
+            if (!ExceptionHandlingResponse(response)) 
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
     }
 }

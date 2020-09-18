@@ -4,16 +4,15 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WhereIsMyGame.Core.Communication;
-using WhereIsMyGame.WebApp.MVC.Extensions;
 
-namespace WhereIsMyGame.WebApp.MVC.Services
+namespace WhereIsMyGame.BackFrondEnd.Loan.Services
 {
     public abstract class Service
     {
-        protected StringContent GetContent(object data)
+        protected StringContent GetContent(object dado)
         {
             return new StringContent(
-                JsonSerializer.Serialize(data),
+                JsonSerializer.Serialize(dado),
                 Encoding.UTF8,
                 "application/json");
         }
@@ -28,19 +27,9 @@ namespace WhereIsMyGame.WebApp.MVC.Services
             return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
         }
 
-        protected bool ExceptionHandlingResponse(HttpResponseMessage response)
+        protected bool HandlingResponseError(HttpResponseMessage response)
         {
-            switch ((int)response.StatusCode)
-            {
-                case 401:
-                case 403:
-                case 404:
-                case 500:
-                    throw new CustomHttpRequestException(response.StatusCode);
-
-                case 400:
-                    return false;
-            }
+            if (response.StatusCode == HttpStatusCode.BadRequest) return false;
 
             response.EnsureSuccessStatusCode();
             return true;

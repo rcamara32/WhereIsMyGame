@@ -8,7 +8,7 @@ namespace WhereIsMyGame.WebApi.Core.Extension
 {
     public static class PollyExtensions
     {
-        public static AsyncRetryPolicy<HttpResponseMessage> EsperarTentar()
+        public static AsyncRetryPolicy<HttpResponseMessage> Reconnecting()
         {
             var retry = HttpPolicyExtensions
                 .HandleTransientHttpError()

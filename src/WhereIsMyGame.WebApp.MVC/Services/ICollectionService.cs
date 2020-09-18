@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhereIsMyGame.Core.Communication;
 using WhereIsMyGame.WebApp.MVC.Models;
 
 namespace WhereIsMyGame.WebApp.MVC.Services
@@ -10,6 +11,9 @@ namespace WhereIsMyGame.WebApp.MVC.Services
     {
         Task<IEnumerable<GameViewModel>> GetByUser();
         Task<GameViewModel> GetById(Guid id);
+        Task<IEnumerable<PlataformViewModel>> GetAllPlataforms();
+
+        Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel);
     }
 
     public interface ICollectionServiceRefit
@@ -19,5 +23,11 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
         [Get("game/{id}")]
         Task<GameViewModel> GetByid(Guid id);
+
+        [Get("games/plataforms")]
+        Task<IEnumerable<PlataformViewModel>> GetAllPlataforms();
+
+        [Post("games/new-game")]
+        Task AddGame(NewGameViewModel newGameViewModel);
     }
 }

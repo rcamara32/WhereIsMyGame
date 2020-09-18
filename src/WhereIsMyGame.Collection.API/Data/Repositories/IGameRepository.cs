@@ -6,10 +6,8 @@ using WhereIsMyGame.Core.Data;
 
 namespace WhereIsMyGame.Collection.API.Data.Repositories
 {
-
     public interface IGameRepository : IRepositoryBase<Game>
     {
-        Task<IEnumerable<Game>> GetAll();
         Task<Game> GetById(Guid id);
         Task<IEnumerable<Game>> GetByUser(Guid userId);
         Task<IEnumerable<Game>> GetByPlataform(int code);

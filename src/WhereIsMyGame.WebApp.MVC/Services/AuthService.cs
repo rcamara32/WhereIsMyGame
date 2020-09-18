@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WhereIsMyGame.Core.Communication;
 using WhereIsMyGame.WebApp.MVC.Extensions;
 using WhereIsMyGame.WebApp.MVC.Models;
 

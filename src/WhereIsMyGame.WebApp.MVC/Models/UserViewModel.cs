@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using WhereIsMyGame.Core.Communication;
 
 namespace WhereIsMyGame.WebApp.MVC.Models
 {

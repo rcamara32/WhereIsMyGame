@@ -26,9 +26,8 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WhereIsMyGame.Collection.Application\WhereIsMyGame.Collection.Application.csproj" />
-    <ProjectReference Include="..\..\WhereIsMyGame.Collection.Data\WhereIsMyGame.Collection.Data.csproj" />
     <ProjectReference Include="..\..\WhereIsMyGame.WebApi.Core\WhereIsMyGame.WebApi.Core.csproj" />
+    <ProjectReference Include="..\WhereIsMyGame.Core\WhereIsMyGame.Core.csproj" />
   </ItemGroup>
 
 

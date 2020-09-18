@@ -4,5 +4,6 @@
     {
         public string AuthUrl { get; set; }
         public string CollectionUrl { get; set; }
+        public string CollectionBffUrl { get; set; }
     }
 }

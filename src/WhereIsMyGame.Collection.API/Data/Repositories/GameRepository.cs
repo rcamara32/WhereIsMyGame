@@ -20,12 +20,6 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
-
-        public async Task<IEnumerable<Game>> GetAll()
-        {
-            return await _context.Games.AsNoTracking().ToListAsync();
-        }
-
         public async Task<IEnumerable<Plataform>> GetAllPlataforms()
         {
             return await _context.Plataforms.AsNoTracking().ToListAsync();

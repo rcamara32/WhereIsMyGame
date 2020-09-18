@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using WhereIsMyGame.WebApp.MVC.Models;
+using WhereIsMyGame.Core.Communication;
 
 namespace WhereIsMyGame.WebApp.MVC.Controllers
 {
@@ -8,9 +8,9 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
     {
         protected bool GetResponseErrors(ResponseResult response)
         {
-            if (response != null && response.Errors.ErrorMessages.Any())
+            if (response != null && response.Errors.Messages.Any())
             {
-                foreach (var mensagem in response.Errors.ErrorMessages)
+                foreach (var mensagem in response.Errors.Messages)
                 {
                     ModelState.AddModelError(string.Empty, mensagem);
                 }

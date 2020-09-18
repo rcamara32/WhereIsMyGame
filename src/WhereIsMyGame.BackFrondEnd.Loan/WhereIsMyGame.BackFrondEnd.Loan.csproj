@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>338643ef-8aab-4475-9c58-fe4aabc89524</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WhereIsMyGame.WebApi.Core\WhereIsMyGame.WebApi.Core.csproj" />
+    <ProjectReference Include="..\WhereIsMyGame.Core\WhereIsMyGame.Core.csproj" />
+  </ItemGroup>
+
+
+</Project>

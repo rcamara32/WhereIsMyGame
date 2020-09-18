@@ -58,11 +58,12 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid) return View(userLogin);
 
-            var userLogin1 = await _authService.Login(userLogin);
+            var userAuthenticated = await _authService.Login(userLogin);
 
-            if (GetResponseErrors(userLogin1.ResponseResult)) return View(userLogin1);
+            if (GetResponseErrors(userAuthenticated.ResponseResult)) 
+                return View(userLogin);
 
-            await AuthUser(userLogin1);
+            await AuthUser(userAuthenticated);
 
             if (string.IsNullOrEmpty(returnUrl))
                 return RedirectToAction("Index", "Collection");
