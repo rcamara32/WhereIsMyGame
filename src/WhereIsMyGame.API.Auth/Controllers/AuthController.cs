@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using WhereIsMyGame.Auth.API.Data;
 using WhereIsMyGame.Auth.API.Models;
 using WhereIsMyGame.WebApi.Core.Controllers;
 using WhereIsMyGame.WebApi.Core.Identity;
@@ -19,12 +20,12 @@ namespace WhereIsMyGame.Auth.API.Controllers
     [Route("api/auth")]
     public class AuthController : MainController
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        public AuthController(SignInManager<IdentityUser> signInManager,
-                              UserManager<IdentityUser> userManager,
+        public AuthController(SignInManager<ApplicationUser> signInManager,
+                              UserManager<ApplicationUser> userManager,
                               IOptions<AppSettings> appSettings)
         {
             _signInManager = signInManager;
@@ -35,15 +36,17 @@ namespace WhereIsMyGame.Auth.API.Controllers
         [HttpPost("new-account")]
         public async Task<ActionResult> Register(RegisterUser registerUser)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);           
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
+                FirstName = registerUser.FirstName,
+                LastName = registerUser.LastName,
                 UserName = registerUser.Email,
                 Email = registerUser.Email,
                 EmailConfirmed = true
             };
-
+            
             var createdUser = await _userManager.CreateAsync(user, registerUser.Password);
             if (createdUser.Succeeded)
             {
@@ -90,7 +93,7 @@ namespace WhereIsMyGame.Auth.API.Controllers
             return GetUserToken(encodedToken, user, claims);
         }
 
-        private async Task<ClaimsIdentity> GetUserClaims(ICollection<Claim> claims, IdentityUser user)
+        private async Task<ClaimsIdentity> GetUserClaims(ICollection<Claim> claims, ApplicationUser user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
 

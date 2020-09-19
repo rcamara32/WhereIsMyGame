@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WhereIsMyGame.Auth.API.Data;
+using WhereIsMyGame.Auth.API.Models;
 using WhereIsMyGame.WebApi.Core.Identity;
 
 namespace WhereIsMyGame.Auth.API.Config
@@ -15,7 +16,7 @@ namespace WhereIsMyGame.Auth.API.Config
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()                
                 .AddRoles<IdentityRole>()                
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
