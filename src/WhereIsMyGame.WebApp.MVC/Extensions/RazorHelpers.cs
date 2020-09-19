@@ -1,7 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.AspNetCore.Mvc.Razor;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace WhereIsMyGame.WebApp.MVC.Extensions
 {

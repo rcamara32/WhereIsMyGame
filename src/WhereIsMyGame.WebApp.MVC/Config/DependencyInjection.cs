@@ -16,18 +16,15 @@ namespace WhereIsMyGame.WebApp.MVC.Config
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpClient<IAuthService, AuthService>();
-
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
 
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-            //services.AddHttpClient<IAuthService, AuthService>()
-            //               .AddPolicyHandler(PollyExtensions.Reconnecting())
-            //               .AddTransientHttpErrorPolicy(
-            //                   p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            services.AddHttpClient<IAuthService, AuthService>()
+                           .AddPolicyHandler(PollyExtensions.Reconnecting())
+                          .AddTransientHttpErrorPolicy(
+                              p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient<ICollectionService, CollectionService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()

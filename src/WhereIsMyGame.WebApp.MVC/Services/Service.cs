@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,10 +11,7 @@ namespace WhereIsMyGame.WebApp.MVC.Services
     {
         protected StringContent GetContent(object data)
         {
-            return new StringContent(
-                JsonSerializer.Serialize(data),
-                Encoding.UTF8,
-                "application/json");
+            return new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
         }
 
         protected async Task<T> DeserializeObjectResponse<T>(HttpResponseMessage responseMessage)

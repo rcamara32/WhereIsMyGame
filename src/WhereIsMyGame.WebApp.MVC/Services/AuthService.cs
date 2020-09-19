@@ -13,7 +13,9 @@ namespace WhereIsMyGame.WebApp.MVC.Services
     {
         private readonly HttpClient _httpClient;
 
-        public AuthService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public AuthService(
+            HttpClient httpClient, 
+            IOptions<AppSettings> settings)
         {
             httpClient.BaseAddress = new Uri(settings.Value.AuthUrl);            
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
