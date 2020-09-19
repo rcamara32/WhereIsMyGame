@@ -19,6 +19,6 @@ namespace WhereIsMyGame.Auth.API.Models
         public string Password { get; set; }
 
         [Compare("Password")]
-        public string ConfirmedEmail { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }
