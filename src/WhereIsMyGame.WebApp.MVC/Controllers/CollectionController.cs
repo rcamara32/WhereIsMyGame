@@ -9,19 +9,20 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 {
     public class CollectionController : MainController
     {
-        private readonly ICollectionService _collectionService;
 
-        public CollectionController(ICollectionService collectionService)
+        private readonly ICollectionService _collectionService;        
+
+        public CollectionController(
+            ICollectionService collectionService)            
         {
-            _collectionService = collectionService;
+            _collectionService = collectionService;            
         }
 
-        [HttpGet]        
+        [HttpGet]
         [Route("my-games")]
         public async Task<IActionResult> Index()
         {
             var collection = await _collectionService.GetByUser();
-            //var collection = new List<GameViewModel>();
             return View(collection);
         }
 
@@ -29,7 +30,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
         [Route("game")]
         public async Task<IActionResult> Detail(Guid id)
         {
-            var game = await _collectionService.GetById(id);   
+            var game = await _collectionService.GetById(id);
             game.Plataforms = await _collectionService.GetAllPlataforms();
 
             return View(game);
@@ -43,22 +44,27 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 
         [Route("new-game")]
         [HttpPost]
-        public async Task<IActionResult> NewGame(NewGameViewModel newGameViewModel)
+        public async Task<IActionResult> NewGame([Bind("PlataformId, Name, Description, IsActive, Image")]NewGameViewModel newGameViewModel)
         {
-            if (!ModelState.IsValid) return View(await GetAllPlataformsAsync(newGameViewModel));
+            if (!ModelState.IsValid)
+                return View(await GetAllPlataformsAsync(newGameViewModel));         
+
+            //var image = Image.Load(newGameViewModel.Image.OpenReadStream());
+            //image.Mutate(x => x.Resize(256, 256));
 
             var response = await _collectionService.AddGame(newGameViewModel);
 
-            if (GetResponseErrors(response)) 
+            if (GetResponseErrors(response))
                 TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
 
             return RedirectToAction("Index");
         }
+        
 
         [HttpPost]
         [Route("edit-game")]
         public async Task<IActionResult> EditGame(Guid id, EditGameViewModel editGameViewModel)
-        {            
+        {
             if (!ModelState.IsValid)
                 return View(await GetAllPlataformsAsync(editGameViewModel));
 
@@ -86,6 +92,8 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             editGameViewModel.Plataforms = await _collectionService.GetAllPlataforms();
             return editGameViewModel;
         }
+
+        
 
     }
 }

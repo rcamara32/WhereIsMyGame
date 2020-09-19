@@ -14,6 +14,9 @@ namespace WhereIsMyGame.Collection.API.Data.Map
                 .IsRequired()
                 .HasColumnType("varchar(250)");
 
+            builder.Property(c => c.UserId)
+                .IsRequired();
+
             // 1 : N => Friend : Loan
             builder.HasMany(c => c.Loans)
                 .WithOne(p => p.Friend)

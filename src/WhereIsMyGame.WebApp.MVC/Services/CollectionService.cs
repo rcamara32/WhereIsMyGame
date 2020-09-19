@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -52,7 +53,16 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
         public async Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel)
         {
-            var newGameContent = GetContent(newGameViewModel);
+            var newGameObj = new
+            {
+                newGameViewModel.PlataformId,
+                newGameViewModel.Name,
+                newGameViewModel.Description,
+                newGameViewModel.IsActive,
+                Image = ConvertToByte(newGameViewModel.Image)
+            };
+
+            var newGameContent = GetContent(newGameObj);
 
             var response = await _httpClient.PostAsync("/api/collection/games/add-game/", newGameContent);
 
@@ -83,5 +93,20 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
             return Ok();
         }
+
+        /// <summary>
+        /// Convert IFormFile to array
+        /// </summary>
+        /// <param name="IFormFile">object type of IFormFile - game image</param>
+        /// <returns></returns>
+        private byte[] ConvertToByte(IFormFile formFile)
+        {
+            using var fileStream = formFile.OpenReadStream();
+            byte[] bytes = new byte[formFile.Length];
+            fileStream.Read(bytes, 0, (int)formFile.Length);
+
+            return bytes;
+        }
+
     }
 }

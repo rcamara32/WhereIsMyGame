@@ -29,6 +29,9 @@ namespace WhereIsMyGame.Collection.API.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("Friends");
@@ -47,9 +50,9 @@ namespace WhereIsMyGame.Collection.API.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(500)");
 
-                    b.Property<string>("Image")
+                    b.Property<byte[]>("Image")
                         .IsRequired()
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

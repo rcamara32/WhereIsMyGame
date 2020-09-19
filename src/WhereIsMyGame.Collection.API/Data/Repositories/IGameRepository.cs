@@ -18,10 +18,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         void Delete(Game game);
 
         void Add(Plataform plataform);
-        void Update(Plataform plataform);
-
-        void Add(Friend friend);
-        void Update(Friend friend);
+        void Update(Plataform plataform);      
 
     }
 

@@ -16,8 +16,11 @@ namespace WhereIsMyGame.Collection.API.Config
             services.AddScoped<IUser, AspNetUser>();
 
             services.AddScoped<IGameAppService, GameAppService>();
+            services.AddScoped<IFriendAppService, FriendAppService>();
+
             services.AddScoped<IGameRepository, GameRepository>();
-            
+            services.AddScoped<IFriendRepository, FriendRepository>();
+
             services.AddScoped<CollectionContext>();
         }
     }

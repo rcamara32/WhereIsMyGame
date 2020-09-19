@@ -1,5 +1,4 @@
 ﻿using System;
-using WhereIsMyGame.Collection.API.Models;
 
 namespace WhereIsMyGame.Collection.API.Application.Dto
 {
@@ -11,7 +10,7 @@ namespace WhereIsMyGame.Collection.API.Application.Dto
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
 
         public PlataformDto Plataform { get; set; }
 

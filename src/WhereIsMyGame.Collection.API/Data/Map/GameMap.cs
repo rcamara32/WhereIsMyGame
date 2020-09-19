@@ -22,8 +22,7 @@ namespace WhereIsMyGame.Collection.API.Data.Map
                 .HasColumnType("varchar(500)");
 
             builder.Property(c => c.Image)
-                .IsRequired()
-                .HasColumnType("varchar(250)");
+                .IsRequired();              
 
             // 1 : N => Game : Loan
             builder.HasMany(c => c.Loans)

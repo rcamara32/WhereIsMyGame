@@ -5,49 +5,60 @@
     ViewData["Title"] = "Add New Game";
 }
 
-<h1>New Game</h1>
-
-<hr />
 <section>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="NewGame">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div>
+        <div class="container" style=" padding-top: 20px">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="one">Add New Game</h3>
+                   
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="NewGame" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <label class="control-label">Plataform</label>
-                    <select asp-for="PlataformId" class="form-control" asp-items="@(new SelectList(Model.Plataforms, "Id", "Name"))">
-                        <option></option>
-                    </select>
+                        <div class="form-group">
+                            <label class="control-label">Plataform</label>
+                            <select asp-for="PlataformId" class="form-control" asp-items="@(new SelectList(Model.Plataforms, "Id", "Name"))">
+                                <option></option>
+                            </select>
 
-                    <span asp-validation-for="PlataformId" class="text-danger"></span>
+                            <span asp-validation-for="PlataformId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Image" class="control-label"></label>
+                            <input asp-for="Image" type="file" class="form-control" accept="image/*">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a class="btn btn-info" asp-action="Index">Back</a>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Image" class="control-label"></label>
-                    <input asp-for="Image" class="form-control" />
-                    <span asp-validation-for="Image" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    <a class="btn btn-info" asp-action="Index">Back</a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
+    
 </section>
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WhereIsMyGame.Collection.API.Migrations
 {
-    public partial class GameLoanInitial : Migration
+    public partial class GamesLoan : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace WhereIsMyGame.Collection.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(type: "varchar(250)", nullable: false)
+                    Name = table.Column<string>(type: "varchar(250)", nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,7 +44,7 @@ namespace WhereIsMyGame.Collection.API.Migrations
                     Description = table.Column<string>(type: "varchar(500)", nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    Image = table.Column<string>(type: "varchar(250)", nullable: false)
+                    Image = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -54,18 +54,12 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         public void Add(Plataform plataform)
         {
             _context.Plataforms.Add(plataform);
-        }
-
-        public void Add(Friend friend)
-        {
-            _context.Friends.Add(friend);
-        }
+        }        
 
         public void Delete(Game game)
         {
             _context.Games.Remove(game);
         }
-
 
         public void Update(Game game)
         {
@@ -76,12 +70,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         {
             _context.Plataforms.Update(plataform);
         }
-
-        public void Update(Friend friend)
-        {
-            _context.Friends.Update(friend);
-        }
-
+              
         public void Dispose()
         {
             _context?.Dispose();

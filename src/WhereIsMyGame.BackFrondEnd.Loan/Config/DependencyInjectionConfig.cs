@@ -23,7 +23,13 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Config
                 .AddPolicyHandler(PollyExtensions.Reconnecting())
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
-           
+
+            services.AddHttpClient<IFriendService, FriendService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                .AddPolicyHandler(PollyExtensions.Reconnecting())
+                .AddTransientHttpErrorPolicy(
+                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
         }
     }
 }
