@@ -28,8 +28,8 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 
 
         [HttpGet]
-        [Route("friend")]
-        public async Task<IActionResult> Detail(Guid id)
+        [Route("edit-friend")]
+        public async Task<IActionResult> EditFriend(Guid id)
         {
             var friend = await _friendService.GetById(id);
             return View(friend);

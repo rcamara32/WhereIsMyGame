@@ -33,8 +33,8 @@ namespace WhereIsMyGame.Collection.API.Controllers
         [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var game = await _friendAppService.GetById(id);
-            return game == null ? NotFound() : CustomResponse(game);
+            var friend = await _friendAppService.GetById(id);
+            return friend == null ? NotFound() : CustomResponse(friend);
         }
 
 
