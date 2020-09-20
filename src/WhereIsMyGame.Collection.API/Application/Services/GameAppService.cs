@@ -45,7 +45,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
 
             if (game != null)
             {
-                return new GameDto()
+                var gameDto =  new GameDto()
                 {
                     Id = game.Id,
                     Name = game.Name,
@@ -65,11 +65,12 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                     GameLoanHistory = game.Loans.Select(l => new GameLoanHistoryDto
                     {
                         CreatedDate = l.CreatedDate,
-                        ReturnedDate = l.ReturnedDate,
-                        QtdDaysLoan = (l.ReturnedDate?.Date - l.CreatedDate.Date)?.Days ?? 0,
+                        ReturnedDate = l.ReturnedDate,                        
                         FriendName = l.Friend.Name
                     }).ToList()
                 };
+
+                return gameDto;
             }
 
             return null;
@@ -123,5 +124,10 @@ namespace WhereIsMyGame.Collection.API.Application.Services
 
             return false;
         }
+
+        //public async Task<bool> LoanGame()
+        //{ 
+        //}
+
     }
 }

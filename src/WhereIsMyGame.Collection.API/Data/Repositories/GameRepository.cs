@@ -41,11 +41,14 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         }
 
         public async Task<Game> GetById(Guid id)
-        {
-            return await _context.Games
-                .Include(o => o.Plataform)
-                .Include(p => p.Loans)
-                .FirstOrDefaultAsync(i => i.Id == id);
+        {         
+            var game = await _context.Games
+                .Include(b => b.Plataform)
+                .Include(b => b.Loans)
+                .ThenInclude(post => post.Friend)
+                 .FirstOrDefaultAsync(b => b.Id == id);
+
+            return game;
         }
 
         public void Add(Game game)
@@ -56,7 +59,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         public void Add(Plataform plataform)
         {
             _context.Plataforms.Add(plataform);
-        }        
+        }
 
         public void Delete(Game game)
         {
@@ -72,7 +75,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         {
             _context.Plataforms.Update(plataform);
         }
-              
+
         public void Dispose()
         {
             _context?.Dispose();

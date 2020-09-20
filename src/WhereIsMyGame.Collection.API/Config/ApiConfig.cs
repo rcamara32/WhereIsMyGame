@@ -14,7 +14,8 @@ namespace WhereIsMyGame.Collection.API.Config
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<CollectionContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options                
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
 

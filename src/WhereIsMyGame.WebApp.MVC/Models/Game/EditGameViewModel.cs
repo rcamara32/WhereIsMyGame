@@ -24,8 +24,6 @@ namespace WhereIsMyGame.WebApp.MVC.Models
         [Required(ErrorMessage = "The field {0} is required")]
         public string Image { get; set; }
 
-
-        public IEnumerable<PlataformViewModel> Plataforms { get; set; }
-        public ICollection<GameLoanHistoryDto> GameLoanHistory { get; set; }
+        public IEnumerable<PlataformViewModel> Plataforms { get; set; }       
     }
 }

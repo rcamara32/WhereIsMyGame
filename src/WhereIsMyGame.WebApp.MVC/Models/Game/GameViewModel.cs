@@ -16,6 +16,7 @@ namespace WhereIsMyGame.WebApp.MVC.Models
 
         public PlataformViewModel Plataform { get; set; }
         public IEnumerable<PlataformViewModel> Plataforms { get; set; }
+        public IEnumerable<GameLoanHistoryDto> GameLoanHistory  { get; set; }
 
     }
 }

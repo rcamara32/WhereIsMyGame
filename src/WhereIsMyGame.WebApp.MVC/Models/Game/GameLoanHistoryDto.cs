@@ -7,7 +7,12 @@ namespace WhereIsMyGame.WebApp.MVC.Models
         public string FriendName { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ReturnedDate { get; set; }
-        public int QtdDaysLoan { get; set; }
+
+        public int DaysLoan()        
+        {
+            return ReturnedDate.HasValue ?
+                (ReturnedDate.Value.Date - CreatedDate.Date).Days : 0;
+        }
 
     }
 }
