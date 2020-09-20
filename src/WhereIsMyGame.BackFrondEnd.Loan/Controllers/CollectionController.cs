@@ -74,6 +74,14 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Controllers
             var response = await _collectionService.DeleteGame(id);
             return CustomResponse(response);
         }
+      
+        [HttpPut("games/mark-returned")]
+        public async Task<IActionResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+            var response = await _collectionService.MarkAsReturned(markReturnedDto);
+            return CustomResponse(response);
+        }
+
 
     }
 }

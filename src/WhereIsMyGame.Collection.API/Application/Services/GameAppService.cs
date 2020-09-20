@@ -125,9 +125,28 @@ namespace WhereIsMyGame.Collection.API.Application.Services
             return false;
         }
 
-        //public async Task<bool> LoanGame()
-        //{ 
-        //}
+        public async Task<bool> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+            var game = await _gameRepository.GetById(markReturnedDto.Id);
+
+            if (game != null)
+            {
+                var loan = game.Loans.FirstOrDefault(c => !c.IsReturned);
+
+                if (loan != null)
+                {
+                    game.Loans.Remove(loan);
+
+                    loan.MarkAsReturned(DateTime.Now);
+                    game.Loans.Add(loan);
+                }
+
+                _gameRepository.Update(game);
+                return await _gameRepository.UnitOfWork.Commit();
+            }
+
+            return false;
+        }
 
     }
 }

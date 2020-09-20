@@ -71,5 +71,12 @@ namespace WhereIsMyGame.Collection.API.Controllers
             return CustomResponse(result);
         }
 
+        [HttpPut("games/mark-returned/")]
+        public async Task<IActionResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+            var result = await _gameAppService.MarkAsReturned(markReturnedDto);
+            return CustomResponse(result);
+        }
+
     }
 }

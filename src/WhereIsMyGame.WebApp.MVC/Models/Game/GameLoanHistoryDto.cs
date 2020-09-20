@@ -8,6 +8,12 @@ namespace WhereIsMyGame.WebApp.MVC.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? ReturnedDate { get; set; }
 
+        public string ReturnedDateFormat()
+        {
+            return ReturnedDate.HasValue ?
+                ReturnedDate.Value.ToString("dd/MM/yyyy") : "";
+        }
+
         public int DaysLoan()        
         {
             return ReturnedDate.HasValue ?

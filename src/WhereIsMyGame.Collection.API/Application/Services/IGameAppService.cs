@@ -13,5 +13,6 @@ namespace WhereIsMyGame.Collection.API.Application.Services
         Task<bool> AddGame(AddGameDto addGameDto);
         Task<bool> EditGame(EditGameDto editGameDto);
         Task<bool> DeleteGame(Guid id);
+        Task<bool> MarkAsReturned(MarkReturnedDto markReturnedDto);
     }
 }

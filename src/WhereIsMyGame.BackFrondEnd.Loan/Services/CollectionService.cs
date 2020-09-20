@@ -18,6 +18,7 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
         Task<ResponseResult> AddGame(AddGameDto addGameDto);
         Task<ResponseResult> EditGame(EditGameDto editGameDto);
         Task<ResponseResult> DeleteGame(Guid id);
+        Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto);
     }
 
     public class CollectionService : Service, ICollectionService
@@ -86,6 +87,17 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Services
         public async Task<ResponseResult> DeleteGame(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"/api/collection/games/delete-game/{id}");
+
+            if (!HandlingResponseError(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+        public async Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+            var editGameContent = GetContent(markReturnedDto);
+            var response = await _httpClient.PutAsync("/api/collection/games/mark-returned/", editGameContent);
 
             if (!HandlingResponseError(response))
                 return await DeserializeObjectResponse<ResponseResult>(response);

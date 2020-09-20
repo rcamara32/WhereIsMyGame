@@ -9,13 +9,11 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 {
     public class CollectionController : MainController
     {
+        private readonly ICollectionService _collectionService;
 
-        private readonly ICollectionService _collectionService;        
-
-        public CollectionController(
-            ICollectionService collectionService)            
+        public CollectionController(ICollectionService collectionService)
         {
-            _collectionService = collectionService;            
+            _collectionService = collectionService;
         }
 
         [HttpGet]
@@ -47,7 +45,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
         public async Task<IActionResult> NewGame([Bind("PlataformId, Name, Description, IsActive, Image")]NewGameViewModel newGameViewModel)
         {
             if (!ModelState.IsValid)
-                return View(await GetAllPlataformsAsync(newGameViewModel));         
+                return View(await GetAllPlataformsAsync(newGameViewModel));
 
             //var image = Image.Load(newGameViewModel.Image.OpenReadStream());
             //image.Mutate(x => x.Resize(256, 256));
@@ -59,7 +57,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
 
         [HttpPost]
         [Route("edit-game")]
@@ -81,6 +79,18 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Route("return")]
+        public async Task<IActionResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+           var response =  await _collectionService.MarkAsReturned(markReturnedDto);
+
+            if (GetResponseErrors(response)) 
+                return View("Index", await _collectionService.GetById(markReturnedDto.Id));
+            
+            return RedirectToAction("Index");
+        }
+
         private async Task<NewGameViewModel> GetAllPlataformsAsync(NewGameViewModel newGameViewModel)
         {
             newGameViewModel.Plataforms = await _collectionService.GetAllPlataforms();
@@ -93,7 +103,6 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             return editGameViewModel;
         }
 
-        
 
     }
 }

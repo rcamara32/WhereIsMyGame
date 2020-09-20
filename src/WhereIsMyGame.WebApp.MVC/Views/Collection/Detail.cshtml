@@ -23,7 +23,10 @@
                         @{
                             if (Model.IsLoaned)
                             {
-                                <input type="button" value="Mark as Returned" class="btn btn-primary" />
+                                <form asp-action="MarkAsReturned">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="submit" value="Mark as Returned" class="btn btn-primary" />
+                                </form>
                             }
                             else
                             {
@@ -93,8 +96,8 @@
                                         {
                                             <tr>
                                                 <td>@history.FriendName</td>
-                                                <td>@history.CreatedDate</td>
-                                                <td>@history.ReturnedDate</td>
+                                                <td>@history.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                                <td>@history.ReturnedDateFormat()</td>
                                                 <td>@history.DaysLoan().ToString()</td>
                                             </tr>
                                         }

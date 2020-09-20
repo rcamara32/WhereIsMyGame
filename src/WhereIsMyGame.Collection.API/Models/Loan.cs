@@ -26,6 +26,11 @@ namespace WhereIsMyGame.Collection.API.Models
 
             Validate();
         }
+
+        public void MarkAsReturned(DateTime returnedDate) {
+            ReturnedDate = returnedDate;
+            IsReturned = true;
+        }
      
         public void Validate()
         {

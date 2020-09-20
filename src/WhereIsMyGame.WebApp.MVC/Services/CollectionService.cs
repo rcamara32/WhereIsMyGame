@@ -94,6 +94,19 @@ namespace WhereIsMyGame.WebApp.MVC.Services
             return Ok();
         }
 
+        public async Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
+        {
+            var editGameContent = GetContent(markReturnedDto);
+
+            var response = await _httpClient.PutAsync($"/api/collection/games/mark-returned/", editGameContent);
+
+            if (!ExceptionHandlingResponse(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
+
         /// <summary>
         /// Convert IFormFile to array
         /// </summary>

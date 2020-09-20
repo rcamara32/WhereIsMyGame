@@ -16,7 +16,7 @@ namespace WhereIsMyGame.WebApp.MVC.Services
         Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel);
         Task<ResponseResult> EditGame(EditGameViewModel editGameViewModel);
         Task<ResponseResult> DeleteGame(Guid id);
-
+        Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto);
     }
 
     public interface ICollectionServiceRefit
@@ -31,6 +31,15 @@ namespace WhereIsMyGame.WebApp.MVC.Services
         Task<IEnumerable<PlataformViewModel>> GetAllPlataforms();
 
         [Post("games/new-game")]
-        Task AddGame(NewGameViewModel newGameViewModel);
+        Task<ResponseResult> AddGame(NewGameViewModel newGameViewModel);
+
+        [Put("games/edit-game")]
+        Task<ResponseResult> EditGame(EditGameViewModel editGameViewModel);
+
+        [Delete("games/delete-game")]
+        Task<ResponseResult> DeleteGame(Guid id);
+
+        [Put("games/mark-returned")]
+        Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto);
     }
 }
