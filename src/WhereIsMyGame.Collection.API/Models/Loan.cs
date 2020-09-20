@@ -8,6 +8,7 @@ namespace WhereIsMyGame.Collection.API.Models
         public Guid GameId { get; private set; }
         public Guid FriendId { get; private set; }
         public DateTime CreatedDate { get; private set; }
+        public DateTime? ReturnedDate { get; private set; }
         public bool IsReturned { get; private set; }
 
         public Game Game { get; private set; }
@@ -15,11 +16,12 @@ namespace WhereIsMyGame.Collection.API.Models
 
         protected Loan() { }
 
-        public Loan(Guid gameId, Guid friendId, DateTime createdDate, bool returned)
+        public Loan(Guid gameId, Guid friendId, DateTime createdDate, DateTime returnedDate, bool returned)
         {
             GameId = gameId;
             FriendId = friendId;
             CreatedDate = createdDate;
+            ReturnedDate = returnedDate;
             IsReturned = returned;
 
             Validate();

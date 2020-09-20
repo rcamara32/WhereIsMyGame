@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhereIsMyGame.Collection.API.Data;
 
 namespace WhereIsMyGame.Collection.API.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    partial class CollectionContextModelSnapshot : ModelSnapshot
+    [Migration("20200920183049_ReturnedDateLoan")]
+    partial class ReturnedDateLoan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

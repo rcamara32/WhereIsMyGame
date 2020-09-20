@@ -10,21 +10,21 @@ namespace WhereIsMyGame.Collection.API.Models
         public Guid PlataformId { get; private set; }
         public Guid UserId { get; private set; }
         public string Name { get; private set; }
-        public string Description { get; private set; }        
+        public string Description { get; private set; }
         public bool IsActive { get; private set; }
-        public DateTime CreatedDate { get; private set; }        
+        public DateTime CreatedDate { get; private set; }
         public byte[] Image { get; set; }
 
         public Plataform Plataform { get; private set; }
         public ICollection<Loan> Loans { get; private set; }
 
         protected Game() { }
-        
+
         public Game(string name, string description, bool isActive, Guid plataformId,
             Guid userId, DateTime createdDate, byte[] image)
         {
             Name = name;
-            Description = description;          
+            Description = description;
             IsActive = isActive;
             PlataformId = plataformId;
             UserId = userId;
@@ -36,10 +36,10 @@ namespace WhereIsMyGame.Collection.API.Models
 
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
-        public void IsLoan() => Loans.Any(c => !c.IsReturned);
+        public bool IsLoaned() => Loans?.Any(c => !c.IsReturned) ?? false;
 
         public void UpdateDetails(Guid plataformId, string name, string description, bool isActive, byte[] image)
-        {                     
+        {
             PlataformId = plataformId;
             Name = name;
             Description = description;

@@ -28,6 +28,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                 CreatedDate = x.CreatedDate,
                 Image = x.Image,
                 IsActive = x.IsActive,
+                IsLoaned = x.IsLoaned(),
                 UserId = x.UserId,
                 Plataform = new PlataformDto
                 {
@@ -53,13 +54,21 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                     CreatedDate = game.CreatedDate,
                     Image = game.Image,
                     IsActive = game.IsActive,
+                    IsLoaned = game.IsLoaned(),
                     UserId = game.UserId,
                     Plataform = new PlataformDto
                     {
                         Id = game.PlataformId,
                         Name = game.Plataform.Name,
                         Code = game.Plataform.Code
-                    }
+                    },
+                    GameLoanHistory = game.Loans.Select(l => new GameLoanHistoryDto
+                    {
+                        CreatedDate = l.CreatedDate,
+                        ReturnedDate = l.ReturnedDate,
+                        QtdDaysLoan = (l.ReturnedDate?.Date - l.CreatedDate.Date)?.Days ?? 0,
+                        FriendName = l.Friend.Name
+                    }).ToList()
                 };
             }
 
@@ -90,7 +99,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
         {
             var game = await _gameRepository.GetById(editGameDto.Id);
 
-            if (game!= null)
+            if (game != null)
             {
                 game.UpdateDetails(editGameDto.PlataformId, editGameDto.Name,
                         editGameDto.Description, editGameDto.IsActive, editGameDto.Image);
@@ -107,7 +116,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
             var game = await _gameRepository.GetById(id);
 
             if (game != null)
-            {                
+            {
                 _gameRepository.Delete(game);
                 return await _gameRepository.UnitOfWork.Commit();
             }

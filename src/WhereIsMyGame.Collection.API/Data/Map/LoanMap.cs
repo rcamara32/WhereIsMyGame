@@ -14,7 +14,7 @@ namespace WhereIsMyGame.Collection.API.Data.Map
                 .IsRequired();
 
             builder.Property(c => c.FriendId)
-                .IsRequired();            
+                .IsRequired();
 
             builder.ToTable("GamesLoan");
         }
