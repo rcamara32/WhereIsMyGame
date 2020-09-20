@@ -6,6 +6,13 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\images\games\**" />
+    <Content Remove="wwwroot\images\games\**" />
+    <EmbeddedResource Remove="wwwroot\images\games\**" />
+    <None Remove="wwwroot\images\games\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
@@ -34,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="wwwroot\images\games\" />
   </ItemGroup>
 
 </Project>

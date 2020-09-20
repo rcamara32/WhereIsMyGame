@@ -7,5 +7,6 @@ namespace WhereIsMyGame.WebApp.MVC.Services
     {
         Task<GetUserLogin> Login(UserLogin userLogin);
         Task<GetUserLogin> Register(RegisterUser registerUser);
+        Task<UserDetailsDto> GetUserDetails();
     }
 }

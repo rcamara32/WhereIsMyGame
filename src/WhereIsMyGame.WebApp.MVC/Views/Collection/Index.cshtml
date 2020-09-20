@@ -5,9 +5,27 @@
     ViewData["Title"] = "My Games";
 }
 
+    <style>
+        .tag-borrow {
+            float: left;
+            position: relative;
+            left: 0px;
+            top: 40px;
+            z-index: 900;
+            margin-bottom: -40px;
+            transform: rotate(-30deg);
+            content: url('images/borrow-stamp.png');
+        }
+
+        .img-opacity {
+            opacity: .4;
+        }
+    </style>
+
 <section>
     <div>
-        <div class="container" style=" padding-top: 20px">
+        <div class="container" style=" padding-top: 20px
+">
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="one">My Collection Games</h3>
@@ -31,9 +49,23 @@
 
                                 <div class="card" style="width: 18rem;">
 
-                                    <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id" class="img-wrap">
-                                        <img src="data:image;base64,@System.Convert.ToBase64String(@game.Image)" width="230" height="230" />                                        
-                                    </a>
+                                    <div class="container img-wrap">
+                                        <div class="tag-borrow"></div>
+                                        @{
+                                            if (game.IsActive)
+                                            {
+                                                <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id" class="img-opacity">
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(@game.Image)" width="230" height="230" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id">
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(@game.Image)" width="230" height="230" />
+                                                </a>
+                                            }
+                                        }
+                                    </div>
                                     <div class="card-body">
                                         <h5 class="card-title">@game.Name</h5>
                                         <p class="card-text">@game.Plataform.Name </p>
@@ -47,7 +79,7 @@
                                         }
                                         <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id" class="btn btn-primary"> <b> Edit Details</b></a>
                                         |
-                                        <a asp-controller="Collection" asp-action="Delete" asp-route-id="@game.Id" 
+                                        <a asp-controller="Collection" asp-action="Delete" asp-route-id="@game.Id"
                                            onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>

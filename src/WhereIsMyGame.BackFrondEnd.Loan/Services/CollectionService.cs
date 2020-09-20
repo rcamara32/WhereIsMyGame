@@ -10,6 +10,16 @@ using WhereIsMyGame.Core.Communication;
 
 namespace WhereIsMyGame.BackFrondEnd.Loan.Services
 {
+    public interface ICollectionService
+    {
+        Task<IEnumerable<GameDto>> GetByUser();
+        Task<GameDto> GetById(Guid id);
+        Task<IEnumerable<PlataformDto>> GetAllPlataforms();
+        Task<ResponseResult> AddGame(AddGameDto addGameDto);
+        Task<ResponseResult> EditGame(EditGameDto editGameDto);
+        Task<ResponseResult> DeleteGame(Guid id);
+    }
+
     public class CollectionService : Service, ICollectionService
     {
         private readonly HttpClient _httpClient;

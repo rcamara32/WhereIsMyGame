@@ -1,13 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WhereIsMyGame.WebApi.Core.Users;
 using WhereIsMyGame.WebApp.MVC.Models;
 
 namespace WhereIsMyGame.WebApp.MVC.Controllers
 {
     public class HomeController : MainController
     {
+
+        private readonly IUser _appUser;
+
+        public HomeController(IUser appUser)
+        {
+            _appUser = appUser;
+        }
+
         [Route("")]
         public IActionResult Index()
         {
+            if (_appUser.IsAuthenticated())
+            {
+                RedirectToAction("Index", "Profile");
+            }
+
             return View();
         }
 

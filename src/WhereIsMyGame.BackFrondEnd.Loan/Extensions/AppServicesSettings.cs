@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WhereIsMyGame.BackFrondEnd.Loan.Extensions
+﻿namespace WhereIsMyGame.BackFrondEnd.Loan.Extensions
 {
     public class AppServicesSettings
     {
-        public string CollectionUrl { get; set; }        
+        public string CollectionUrl { get; set; }
+        public string AuthUrl { get; set; }
     }
 }

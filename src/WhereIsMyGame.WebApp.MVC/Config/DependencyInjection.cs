@@ -37,6 +37,13 @@ namespace WhereIsMyGame.WebApp.MVC.Config
                 .AddPolicyHandler(PollyExtensions.Reconnecting())
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+            services.AddHttpClient<IProfileService, ProfileService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                .AddPolicyHandler(PollyExtensions.Reconnecting())
+                .AddTransientHttpErrorPolicy(
+                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
         }
     }
 

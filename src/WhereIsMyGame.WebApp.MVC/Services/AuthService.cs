@@ -56,5 +56,20 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
             return await DeserializeObjectResponse<GetUserLogin>(response);
         }
+
+        public async Task<UserDetailsDto> GetUserDetails()
+        {
+            var response = await _httpClient.GetAsync("/api/auth/details");
+
+            if (!ExceptionHandlingResponse(response))
+            {
+                return new UserDetailsDto
+                {
+                    ResponseResult = await DeserializeObjectResponse<ResponseResult>(response)
+                };
+            }
+
+            return await DeserializeObjectResponse<UserDetailsDto>(response);
+        }
     }
 }

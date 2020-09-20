@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WhereIsMyGame.Auth.API.Data;
+using WhereIsMyGame.Auth.API.Dto;
 using WhereIsMyGame.Auth.API.Models;
 using WhereIsMyGame.WebApi.Core.Controllers;
 using WhereIsMyGame.WebApi.Core.Identity;
@@ -80,6 +81,26 @@ namespace WhereIsMyGame.Auth.API.Controllers
 
             AddError("Incorrect user or password");
             return CustomResponse();
+        }
+
+        [HttpGet("details/{userId}")]
+        public async Task<ActionResult> GetUserDetails(string userId) 
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var userDto = new ApplicationUserDetailDto
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email
+                };
+
+                return CustomResponse(userDto);
+            }            
+           
+            return NotFound();
         }
 
         private async Task<GetUserLogin> GenerateJwt(string email)

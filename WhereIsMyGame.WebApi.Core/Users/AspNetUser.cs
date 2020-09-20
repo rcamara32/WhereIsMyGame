@@ -50,5 +50,10 @@ namespace WhereIsMyGame.WebApi.Core.Users
         {
             return _accessor.HttpContext;
         }
+
+        public ClaimsPrincipal GetUser()
+        {
+            return _accessor.HttpContext.User;
+        }
     }
 }

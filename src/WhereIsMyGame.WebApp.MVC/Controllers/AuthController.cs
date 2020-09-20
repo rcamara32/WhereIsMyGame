@@ -66,7 +66,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             await AuthUser(userAuthenticated);
 
             if (string.IsNullOrEmpty(returnUrl))
-                return RedirectToAction("Index", "Collection");
+                return RedirectToAction("Index", "Profile");
 
             return LocalRedirect(returnUrl);
         }

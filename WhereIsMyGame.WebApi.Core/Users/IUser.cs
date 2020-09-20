@@ -15,6 +15,7 @@ namespace WhereIsMyGame.WebApi.Core.Users
         bool HasRole(string role);
         IEnumerable<Claim> GetClaims();
         HttpContext GetHttpContext();
+        ClaimsPrincipal GetUser();
     }
 
 }
