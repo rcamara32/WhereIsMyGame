@@ -10,9 +10,9 @@
             float: left;
             position: relative;
             left: 0px;
-            top: 40px;
+            top: 10px;
             z-index: 900;
-            margin-bottom: -40px;
+            margin-bottom: -100px;
             transform: rotate(-30deg);
             content: url('images/borrow-stamp.png');
         }
@@ -67,15 +67,7 @@
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">@game.Name</h5>
-                                        <p class="card-text">@game.Plataform.Name </p>
-                                        @if (game.IsActive)
-                                        {
-                                            <p>Is Active</p>
-                                        }
-                                        else
-                                        {
-                                            <p>Is Inactive</p>
-                                        }
+                                        <p class="card-text">@game.Plataform.Name </p>                                       
                                         <a asp-controller="Collection" asp-action="Detail" asp-route-id="@game.Id" class="btn btn-primary"> <b> Edit Details</b></a>
                                         |
                                         <a asp-controller="Collection" asp-action="Delete" asp-route-id="@game.Id"

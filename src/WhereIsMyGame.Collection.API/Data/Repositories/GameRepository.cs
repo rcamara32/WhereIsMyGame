@@ -29,6 +29,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         {
             return await _context.Games.AsNoTracking()
                 .Include(p => p.Plataform)
+                .Include(p => p.Loans)
                 .Where(c => c.UserId == userId).ToListAsync();
         }
 
@@ -43,6 +44,7 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         {
             return await _context.Games
                 .Include(o => o.Plataform)
+                .Include(p => p.Loans)
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
 
