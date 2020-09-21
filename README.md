@@ -16,3 +16,7 @@ Run the command to generate the database:
 ```
 dotnet ef database update --context CollectionContext --project \WhereIsMyGame\src\WhereIsMyGame.Collection.API\WhereIsMyGame.Collection.API.csproj
 ```
+
+## Populating Plafatorm Table
+run this file on t-SQL
+https://github.com/rcamara32/WhereIsMyGame/blob/master/SQL/01%20-%20INSERT%20PLATAFORMS.sql
