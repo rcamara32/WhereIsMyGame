@@ -129,6 +129,7 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             if (GetResponseErrors(response))
                 return View("Index", await _collectionService.GetById(gameLoanViewModel.GameId));
 
+            gameLoanViewModel.Friends = await _friendService.GetByUser();
             return PartialView("_GameLoan", gameLoanViewModel);
         }
 
