@@ -24,6 +24,7 @@ https://github.com/rcamara32/WhereIsMyGame/blob/master/SQL/01%20-%20INSERT%20PLA
 
 ## Features
 
+- AspNet Core User Identity
 - WebApi
 - JWT Token
 - Core Api (keep cache user credenditals sending trough api's)
