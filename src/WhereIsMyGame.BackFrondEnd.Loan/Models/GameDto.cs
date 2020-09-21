@@ -10,6 +10,7 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Models
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public bool IsLoaned { get; set; }
+        public DateTime? LastDateLoan { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Image { get; set; }
 

@@ -23,14 +23,18 @@
                         @{
                             if (Model.IsLoaned)
                             {
-                                <form asp-action="MarkAsReturned">
-                                    <input type="hidden" asp-for="Id" />
-                                    <input type="submit" value="Mark as Returned" class="btn btn-primary" />
-                                </form>
+                                <!-- returned modal -->                                
+                                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#modalReturned" 
+                                        data-url="@Url.Action("MarkAsReturnedView", new MarkReturnedDto {GameId=Model.Id, LastDateLoan = Model.LastDateLoan })">
+                                    Mark as Returned
+                                </button>
                             }
                             else
                             {
-                                <input type="button" value="Borrow" class="btn btn-primary" />
+                                <!-- loan modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loanModal">
+                                    Borrow Game
+                                </button>
                             }
                         }
                     </div>
@@ -92,7 +96,7 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        foreach (var history in Model.GameLoanHistory)
+                                        foreach (var history in Model.GameLoanHistory.OrderByDescending(c => c.CreatedDate))
                                         {
                                             <tr>
                                                 <td>@history.FriendName</td>
@@ -116,3 +120,12 @@
         </div>
     </div>
 </section>
+
+
+
+<!-- Modal placeholder -->
+<div id="modal-placeholder"></div>
+
+
+<!-- Loan Modal -->
+@Html.Partial("_Loan", new MarkReturnedDto { GameId = Model.Id, LastDateLoan = Model.LastDateLoan })

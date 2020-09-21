@@ -36,7 +36,17 @@ namespace WhereIsMyGame.Collection.API.Models
 
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
-        public bool IsLoaned() => Loans?.Any(c => !c.IsReturned) ?? false;
+        public bool IsLoaned() => Loans?.Any(c => !c.IsReturned) ?? false;       
+
+        public DateTime? LastDateLoan()
+        {
+            if (Loans.Any())
+            {
+                return Loans.FirstOrDefault(c => !c.IsReturned).CreatedDate;
+
+            }
+            return null;
+        }
 
         public void UpdateDetails(Guid plataformId, string name, string description, bool isActive, byte[] image)
         {

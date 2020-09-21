@@ -38,9 +38,4 @@
     <ProjectReference Include="..\WhereIsMyGame.Core\WhereIsMyGame.Core.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

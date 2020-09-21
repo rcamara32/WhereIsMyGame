@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereIsMyGame.WebApp.MVC.Models;
@@ -79,15 +80,27 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private readonly static IList<MarkReturnedDto> MarkReturned = new List<MarkReturnedDto>();
+
+        public IActionResult MarkAsReturnedView(MarkReturnedDto markReturnedDto)
+        {
+            return PartialView("_MarkAsReturned", markReturnedDto);
+        }
+
         [HttpPost]
-        [Route("return")]
         public async Task<IActionResult> MarkAsReturned(MarkReturnedDto markReturnedDto)
         {
-           var response =  await _collectionService.MarkAsReturned(markReturnedDto);
+            if (ModelState.IsValid)
+            {
+                MarkReturned.Add(markReturnedDto);
+            }
+
+            var response =  await _collectionService.MarkAsReturned(markReturnedDto);
 
             if (GetResponseErrors(response)) 
-                return View("Index", await _collectionService.GetById(markReturnedDto.Id));
-            
+                return View("Index", await _collectionService.GetById(markReturnedDto.GameId));
+
             return RedirectToAction("Index");
         }
 

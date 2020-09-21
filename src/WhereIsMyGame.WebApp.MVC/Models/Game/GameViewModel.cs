@@ -11,6 +11,7 @@ namespace WhereIsMyGame.WebApp.MVC.Models
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public bool IsLoaned { get; set; }
+        public DateTime? LastDateLoan { get; set; }
         public DateTime CreatedDate { get; set; }
         public byte[] Image { get; set; }        
 

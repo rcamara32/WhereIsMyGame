@@ -27,7 +27,8 @@ namespace WhereIsMyGame.Collection.API.Models
             Validate();
         }
 
-        public void MarkAsReturned(DateTime returnedDate) {
+        public void MarkAsReturned(DateTime createdDate, DateTime returnedDate) {
+            CreatedDate = createdDate;
             ReturnedDate = returnedDate;
             IsReturned = true;
         }

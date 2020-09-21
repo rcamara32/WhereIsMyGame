@@ -29,6 +29,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                 Image = x.Image,
                 IsActive = x.IsActive,
                 IsLoaned = x.IsLoaned(),
+                LastDateLoan = x.LastDateLoan(),
                 UserId = x.UserId,
                 Plataform = new PlataformDto
                 {
@@ -55,6 +56,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                     Image = game.Image,
                     IsActive = game.IsActive,
                     IsLoaned = game.IsLoaned(),
+                    LastDateLoan = game.LastDateLoan(),
                     UserId = game.UserId,
                     Plataform = new PlataformDto
                     {
@@ -127,7 +129,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
 
         public async Task<bool> MarkAsReturned(MarkReturnedDto markReturnedDto)
         {
-            var game = await _gameRepository.GetById(markReturnedDto.Id);
+            var game = await _gameRepository.GetById(markReturnedDto.GameId);
 
             if (game != null)
             {
@@ -137,7 +139,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                 {
                     game.Loans.Remove(loan);
 
-                    loan.MarkAsReturned(DateTime.Now);
+                    loan.MarkAsReturned(loan.CreatedDate, markReturnedDto.ReturnedDate);
                     game.Loans.Add(loan);
                 }
 
