@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereIsMyGame.Collection.API.Application.Dto;
 using WhereIsMyGame.Collection.API.Data.Repositories;
+using WhereIsMyGame.Collection.API.Models;
 
 namespace WhereIsMyGame.Collection.API.Application.Services
 {
@@ -46,7 +48,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
 
             if (game != null)
             {
-                var gameDto =  new GameDto()
+                var gameDto = new GameDto()
                 {
                     Id = game.Id,
                     Name = game.Name,
@@ -67,7 +69,7 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                     GameLoanHistory = game.Loans.Select(l => new GameLoanHistoryDto
                     {
                         CreatedDate = l.CreatedDate,
-                        ReturnedDate = l.ReturnedDate,                        
+                        ReturnedDate = l.ReturnedDate,
                         FriendName = l.Friend.Name
                     }).ToList()
                 };
@@ -144,6 +146,20 @@ namespace WhereIsMyGame.Collection.API.Application.Services
                 }
 
                 _gameRepository.Update(game);
+                return await _gameRepository.UnitOfWork.Commit();
+            }
+
+            return false;
+        }
+
+        public async Task<bool> GameLoan(GameLoanDto gameLoanDto)
+        {
+            var game = await _gameRepository.GetById(gameLoanDto.GameId);
+
+            if (game != null)
+            {
+                var gameLoan = new Loan(gameLoanDto.GameId, gameLoanDto.FriendId, gameLoanDto.StartDate, null, false);
+                _gameRepository.AddGameLoan(gameLoan);
                 return await _gameRepository.UnitOfWork.Commit();
             }
 

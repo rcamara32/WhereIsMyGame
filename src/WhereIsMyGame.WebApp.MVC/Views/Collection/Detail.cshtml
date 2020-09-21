@@ -5,6 +5,12 @@
     ViewData["Title"] = "Edit Game | " + Model.Name;
 }
 
+<!-- Modal placeholder -->
+<div id="modal-placeholder"></div>
+
+<!-- Modal placeholder -->
+<div id="modal-placeholder1"></div>
+
 <section>
     <div>
         <div class="container" style=" padding-top: 20px">
@@ -23,16 +29,17 @@
                         @{
                             if (Model.IsLoaned)
                             {
-                                <!-- returned modal -->                                
-                                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#modalReturned" 
+                                <!-- returned modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#modalReturned"
                                         data-url="@Url.Action("MarkAsReturnedView", new MarkReturnedDto {GameId=Model.Id, LastDateLoan = Model.LastDateLoan })">
                                     Mark as Returned
                                 </button>
                             }
                             else
                             {
-                                <!-- loan modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loanModal">
+                                <!-- game loan modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#modalGameLoan"
+                                        data-url="@Url.Action("GameLoanView", new GameLoanViewModel { GameId= Model.Id })">
                                     Borrow Game
                                 </button>
                             }
@@ -120,12 +127,3 @@
         </div>
     </div>
 </section>
-
-
-
-<!-- Modal placeholder -->
-<div id="modal-placeholder"></div>
-
-
-<!-- Loan Modal -->
-@Html.Partial("_Loan", new MarkReturnedDto { GameId = Model.Id, LastDateLoan = Model.LastDateLoan })

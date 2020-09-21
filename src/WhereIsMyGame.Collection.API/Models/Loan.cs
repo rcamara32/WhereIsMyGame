@@ -16,7 +16,7 @@ namespace WhereIsMyGame.Collection.API.Models
 
         protected Loan() { }
 
-        public Loan(Guid gameId, Guid friendId, DateTime createdDate, DateTime returnedDate, bool returned)
+        public Loan(Guid gameId, Guid friendId, DateTime createdDate, DateTime? returnedDate, bool returned)
         {
             GameId = gameId;
             FriendId = friendId;
@@ -32,7 +32,7 @@ namespace WhereIsMyGame.Collection.API.Models
             ReturnedDate = returnedDate;
             IsReturned = true;
         }
-     
+
         public void Validate()
         {
             Validations.IfDifferent(GameId, Guid.Empty, "The Game cannot be empty");

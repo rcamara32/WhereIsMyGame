@@ -1,10 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-
-$(function () {
+﻿$(function () {
     var placeholderElement = $('#modal-placeholder');
 
     $('button[data-toggle="ajax-modal"]').click(function (event) {
@@ -29,6 +23,7 @@ $(function () {
             var isValid = newBody.find('[name="IsValid"]').val() == 'True';
             if (isValid) {
                 placeholderElement.find('.modal').modal('hide');
+                location.reload();
             }
         });
     });

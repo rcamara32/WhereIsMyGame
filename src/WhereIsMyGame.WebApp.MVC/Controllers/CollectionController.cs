@@ -11,10 +11,14 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
     public class CollectionController : MainController
     {
         private readonly ICollectionService _collectionService;
+        private readonly IFriendService _friendService;
 
-        public CollectionController(ICollectionService collectionService)
+        public CollectionController(
+            ICollectionService collectionService,
+            IFriendService friendService)
         {
             _collectionService = collectionService;
+            _friendService = friendService;
         }
 
         [HttpGet]
@@ -95,14 +99,39 @@ namespace WhereIsMyGame.WebApp.MVC.Controllers
             {
                 MarkReturned.Add(markReturnedDto);
             }
+          
+            var response = await _collectionService.MarkAsReturned(markReturnedDto);
 
-            var response =  await _collectionService.MarkAsReturned(markReturnedDto);
-
-            if (GetResponseErrors(response)) 
+            if (GetResponseErrors(response))
                 return View("Index", await _collectionService.GetById(markReturnedDto.GameId));
 
-            return RedirectToAction("Index");
+            return PartialView("_MarkAsReturned", markReturnedDto);
         }
+
+
+        private readonly static IList<GameLoanViewModel> GameLoanViewModel = new List<GameLoanViewModel>();
+        public async Task<IActionResult> GameLoanView(GameLoanViewModel gameLoanViewModel)
+        {
+            gameLoanViewModel.Friends = await _friendService.GetByUser();
+            return PartialView("_GameLoan", gameLoanViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GameLoan(GameLoanViewModel gameLoanViewModel)
+        {
+            if (ModelState.IsValid)
+            {                
+                GameLoanViewModel.Add(gameLoanViewModel);
+            }
+
+            var response = await _collectionService.GameLoan(gameLoanViewModel);
+
+            if (GetResponseErrors(response))
+                return View("Index", await _collectionService.GetById(gameLoanViewModel.GameId));
+
+            return PartialView("_GameLoan", gameLoanViewModel);
+        }
+
 
         private async Task<NewGameViewModel> GetAllPlataformsAsync(NewGameViewModel newGameViewModel)
         {

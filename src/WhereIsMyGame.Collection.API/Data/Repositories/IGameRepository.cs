@@ -18,8 +18,10 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
         void Delete(Game game);
 
         void Add(Plataform plataform);
-        void Update(Plataform plataform);      
+        void Update(Plataform plataform);
 
+
+        void AddGameLoan(Loan loan);
     }
 
 }

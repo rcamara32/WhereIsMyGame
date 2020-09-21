@@ -76,6 +76,11 @@ namespace WhereIsMyGame.Collection.API.Data.Repositories
             _context.Plataforms.Update(plataform);
         }
 
+        public void AddGameLoan(Loan loan)
+        {
+            _context.Loans.Add(loan);
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

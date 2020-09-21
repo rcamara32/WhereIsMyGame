@@ -1,5 +1,5 @@
 ﻿using System;
-using WhereIsMyGame.WebApp.MVC.Extensions;
+using WhereIsMyGame.WebApp.MVC.Validation;
 
 namespace WhereIsMyGame.WebApp.MVC.Models
 {

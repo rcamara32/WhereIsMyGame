@@ -82,6 +82,14 @@ namespace WhereIsMyGame.BackFrondEnd.Loan.Controllers
             return CustomResponse(response);
         }
 
+        [HttpPost]
+        [Route("games/loan")]
+        public async Task<IActionResult> GameLoan(GameLoanDto gameLoanDto)
+        {
+            var response = await _collectionService.GameLoan(gameLoanDto);
+            return CustomResponse(response);
+        }
+
 
     }
 }

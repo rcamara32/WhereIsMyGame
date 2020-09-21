@@ -17,6 +17,7 @@ namespace WhereIsMyGame.WebApp.MVC.Services
         Task<ResponseResult> EditGame(EditGameViewModel editGameViewModel);
         Task<ResponseResult> DeleteGame(Guid id);
         Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto);
+        Task<ResponseResult> GameLoan(GameLoanViewModel gameLoanViewModel);
     }
 
     public interface ICollectionServiceRefit
@@ -41,5 +42,8 @@ namespace WhereIsMyGame.WebApp.MVC.Services
 
         [Put("games/mark-returned")]
         Task<ResponseResult> MarkAsReturned(MarkReturnedDto markReturnedDto);
+
+        [Post("games/loan")]
+        Task<ResponseResult> GameLoan(GameViewModel gameViewModel);
     }
 }

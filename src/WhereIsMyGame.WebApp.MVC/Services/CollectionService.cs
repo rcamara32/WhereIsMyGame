@@ -106,6 +106,18 @@ namespace WhereIsMyGame.WebApp.MVC.Services
             return Ok();
         }
 
+        public async Task<ResponseResult> GameLoan(GameLoanViewModel gameLoanViewModel)
+        {
+            var itemContent = GetContent(gameLoanViewModel);
+
+            var response = await _httpClient.PostAsync($"/api/collection/games/loan/", itemContent);
+
+            if (!ExceptionHandlingResponse(response))
+                return await DeserializeObjectResponse<ResponseResult>(response);
+
+            return Ok();
+        }
+
 
         /// <summary>
         /// Convert IFormFile to array

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WhereIsMyGame.WebApp.MVC.Extensions
+namespace WhereIsMyGame.WebApp.MVC.Validation
 {
     public class DateGreaterThanAttribute : ValidationAttribute
     {

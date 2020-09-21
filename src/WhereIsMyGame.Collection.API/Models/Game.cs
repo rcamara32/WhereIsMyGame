@@ -34,6 +34,11 @@ namespace WhereIsMyGame.Collection.API.Models
             Validate();
         }
 
+        public void GameLoan(Guid gameId, Guid friendId, DateTime startDate)
+        {
+            Loans.Add(new Loan(gameId, friendId, startDate, null, false));
+        }
+
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
         public bool IsLoaned() => Loans?.Any(c => !c.IsReturned) ?? false;       
@@ -42,9 +47,11 @@ namespace WhereIsMyGame.Collection.API.Models
         {
             if (Loans.Any())
             {
-                return Loans.FirstOrDefault(c => !c.IsReturned).CreatedDate;
-
+                var obj = Loans.FirstOrDefault(c => !c.IsReturned);
+                if (obj != null)               
+                    return obj.CreatedDate;                
             }
+
             return null;
         }
 

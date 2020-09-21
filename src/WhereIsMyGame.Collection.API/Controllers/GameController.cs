@@ -78,5 +78,12 @@ namespace WhereIsMyGame.Collection.API.Controllers
             return CustomResponse(result);
         }
 
+        [HttpPost("games/loan/")]
+        public async Task<IActionResult> GameLoan(GameLoanDto gameLoanDto)
+        {
+            var result = await _gameAppService.GameLoan(gameLoanDto);
+            return CustomResponse(result);
+        }
+
     }
 }
